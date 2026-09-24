@@ -1,5 +1,5 @@
 /* =========================================================
-   valorahq — interaction + animation layer
+   Valora — interaction + animation layer
    Vanilla JS, no dependencies.
    ========================================================= */
 (function () {
@@ -16,7 +16,7 @@
     if (reduced) return;
     var el = document.createElement('div');
     el.className = 'curtain';
-    el.innerHTML = '<span class="curtain__word">valorahq</span>';
+    el.innerHTML = '<span class="curtain__word">Valora</span>';
     document.body.appendChild(el);
     document.documentElement.style.overflow = 'hidden';
 
@@ -82,7 +82,7 @@
     var targets = $$('.reveal, .line-reveal, .diagram, .mock');
 
     // stagger siblings inside grids/lists
-    ['.statement__cols', '.steps', '.mosaic', '.blist', '.insights__grid', '.post-list', '.brand__mocks', '.match__grid']
+    ['.statement__cols', '.steps', '.mosaic', '.blist', '.insights__grid', '.post-list', '.brand__mocks', '.match__grid', '.feat']
       .forEach(function (sel) {
         $$(sel).forEach(function (group) {
           $$(':scope > *', group).forEach(function (child, i) {
@@ -254,7 +254,8 @@
     if (!nums.length) return;
 
     function format(n, el) {
-      var v = Math.round(n);
+      var dec = parseInt(el.dataset.decimals || '0', 10);
+      var v = dec ? n.toFixed(dec) : Math.round(n);
       var out = v >= 1000 ? v.toLocaleString('en-US') : String(v);
       return (el.dataset.prefix || '') + out + (el.dataset.suffix || '');
     }
@@ -438,59 +439,61 @@
   }
 
   /* ---------------------------------------------------------
-     12. Form validation
+     12. Lead forms (hero card, page form, modal, advisor forms)
+     Any <form data-lead="Client|Advisor"> is handled here;
+     field wrappers marked [data-field] get .has-error.
      --------------------------------------------------------- */
   var SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzCcuopJyN1MVXsCEjJMBm0T9qXnR4zXHZwtCplq0gmqR6_ap2uuYjiWVCiOHqG70Td/exec';
+  var LEAD_FAIL = 'Sorry — we could not send that. Please email barot@valorahq.com.';
 
-  /* shared lead helpers (used by the hero card, the page form and the modal) */
-  var LEAD_FIELDS = ['name', 'email', 'phone', 'goal'];
-  var LEAD_FAIL   = 'Sorry \u2014 we could not send that. Please email barot@valorahq.com.';
+  var LEAD_MSGS = {
+    name:  'Please enter your name.',
+    email: 'Please enter a valid email.',
+    phone: 'Please enter a valid phone number.',
+    goal:  'Pick the closest match.'
+  };
 
-  function setLeadError(f, fieldSel, name, msg) {
-    var slot  = $('[data-err="' + name + '"]', f);
-    var field = f.elements[name].closest(fieldSel);
+  function setLeadError(f, name, msg) {
+    var slot = $('[data-err="' + name + '"]', f);
+    var el   = f.elements[name];
+    var wrap = el ? el.closest('[data-field]') : null;
     if (slot) slot.textContent = msg || '';
-    if (field) field.classList.toggle('has-error', !!msg);
+    if (wrap) wrap.classList.toggle('has-error', !!msg);
   }
 
-  function validateLead(f, fieldSel) {
-    var v = {
-      name:  f.elements.name.value.trim(),
-      email: f.elements.email.value.trim(),
-      phone: f.elements.phone.value.trim(),
-      goal:  f.elements.goal.value,
-      note:  f.elements.note ? f.elements.note.value.trim() : ''
-    };
-    var msgs = {
-      name:  v.name.length < 2 ? 'Please enter your name.' : '',
-      email: !/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(v.email) ? 'Please enter a valid email.' : '',
-      phone: v.phone.replace(/\D/g, '').length < 7 ? 'Please enter a valid phone number.' : '',
-      goal:  !v.goal ? 'Pick the closest match.' : ''
-    };
+  function fieldError(el) {
+    var v = (el.value || '').trim();
+    if (el.type === 'email') return !/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(v);
+    if (el.type === 'tel')   return v.replace(/\D/g, '').length < 7;
+    return v.length < (el.name === 'name' ? 2 : 1);
+  }
 
-    var ok = true;
-    LEAD_FIELDS.forEach(function (n) {
-      if (msgs[n]) ok = false;
-      setLeadError(f, fieldSel, n, msgs[n]);
+  function validateLead(f) {
+    var firstBad = null;
+    $$('input[required], select[required], textarea[required]', f).forEach(function (el) {
+      var bad = fieldError(el);
+      setLeadError(f, el.name, bad ? (LEAD_MSGS[el.name] || 'Required.') : '');
+      if (bad && !firstBad) firstBad = el;
     });
+    if (firstBad) firstBad.focus();
+    return !firstBad;
+  }
 
-    if (!ok) {
-      var bad = $('.has-error input, .has-error select', f);
-      if (bad) bad.focus();
-      return null;
-    }
+  function collectLead(f) {
+    var v = {};
+    Array.prototype.forEach.call(f.elements, function (el) {
+      if (!el.name || el.disabled || /^(submit|button)$/.test(el.type)) return;
+      var val = (el.value || '').trim();
+      if (val) v[el.name] = val;
+    });
+    // optional extras (advisor firm / AUM) go into the note column
+    var extra = $$('[data-extra]', f).map(function (el) {
+      var val = (el.value || '').trim();
+      return val ? el.dataset.extra + ': ' + val : '';
+    }).filter(Boolean);
+    if (extra.length) v.note = extra.join(' · ') + (v.note ? '\n' + v.note : '');
+    if (f.dataset.lead === 'Advisor' && v.goal) v.goal = 'Advisor · ' + v.goal;
     return v;
-  }
-
-  /* clear a field's error as soon as the visitor edits it */
-  function watchLeadFields(f, fieldSel) {
-    LEAD_FIELDS.forEach(function (n) {
-      var el = f.elements[n];
-      if (!el) return;
-      ['input', 'change'].forEach(function (ev) {
-        el.addEventListener(ev, function () { setLeadError(f, fieldSel, n, ''); });
-      });
-    });
   }
 
   function sendLead(v) {
@@ -501,77 +504,86 @@
       .then(function (r) { return r.json().catch(function () { return { status: 'success' }; }); });
   }
 
-  function form() {
-    var f = $('#matchForm');
-    if (!f) return;
-    var ok  = $('#formSuccess');
-    var btn = $('button[type="submit"]', f);
-
-    watchLeadFields(f, '.field');
-
-    f.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var v = validateLead(f, '.field');
-      if (!v) return;
-
-      function done(msg) {
-        if (btn) { btn.disabled = false; btn.textContent = 'Request introductions'; }
-        ok.hidden = false;
-        ok.textContent = msg;
-        ok.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
-      }
-
-      if (btn) { btn.disabled = true; btn.textContent = 'Sending\u2026'; }
-
-      sendLead(v)
-        .then(function (res) {
-          if (res && res.status === 'error') { done(LEAD_FAIL); return; }
-          f.reset();
-          done('Thank you, ' + v.name.split(' ')[0] + ' \u2014 we will send three introductions within two business days.');
-        })
-        .catch(function () { done(LEAD_FAIL); });
-    });
-  }
-
-  /* ---------------------------------------------------------
-     12b. Hero lead card
-     --------------------------------------------------------- */
-  function heroLead() {
-    var f = $('#heroForm');
-    if (!f) return;
-    var card = f.closest('.hcard');
-    var done = $('#heroDone', card);
-    var fine = $('.hcard__fine', card);
-    var btn  = $('.hcard__submit', f);
+  function leadForm(f) {
+    var submit = $('button[type="submit"]', f);
+    var label  = submit ? submit.textContent : '';
+    var host   = f.closest('.hcard, .gate');
+    var fine   = host ? $('.hcard__fine, .gate__fine', host) : null;
     var fineText = fine ? fine.textContent : '';
 
-    watchLeadFields(f, '.hfield');
+    // clear a field's error as soon as the visitor edits it
+    ['input', 'change'].forEach(function (ev) {
+      f.addEventListener(ev, function (e) { if (e.target.name) setLeadError(f, e.target.name, ''); });
+    });
+
+    function showFail() {
+      if (submit) { submit.disabled = false; submit.textContent = label; }
+      if (fine) { fine.textContent = LEAD_FAIL; fine.classList.add('is-error'); return; }
+      var ok = $('.form__success', f);
+      if (ok) { ok.hidden = false; ok.textContent = LEAD_FAIL; }
+    }
+
+    function showDone(v) {
+      var first = v.name ? v.name.split(' ')[0] : '';
+      if (submit) { submit.disabled = false; submit.textContent = label; }
+
+      var done = f.dataset.done ? $(f.dataset.done) : null;
+      if (done) {
+        f.hidden = true;
+        done.hidden = false;
+        if (host) host.classList.add('is-done');
+        var t = $('[data-done-title]', done);
+        if (t && first) t.textContent = 'Thank you, ' + first + '.';
+        return;
+      }
+
+      var ok = $('.form__success', f);
+      var tpl = f.dataset.success || 'Thank you, {name}.';
+      f.reset();
+      if (ok) {
+        ok.hidden = false;
+        ok.textContent = tpl.replace('{name}', first);
+        ok.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
+      }
+    }
 
     f.addEventListener('submit', function (e) {
       e.preventDefault();
-      var v = validateLead(f, '.hfield');
-      if (!v) return;
+      if (!validateLead(f)) return;
 
-      function fail() {
-        btn.disabled = false;
-        btn.textContent = 'Request introductions';
-        if (fine) { fine.textContent = LEAD_FAIL; fine.classList.add('is-error'); }
-      }
-
-      btn.disabled = true;
-      btn.textContent = 'Sending\u2026';
+      var v = collectLead(f);
+      if (submit) { submit.disabled = true; submit.textContent = 'Sending…'; }
       if (fine) { fine.textContent = fineText; fine.classList.remove('is-error'); }
 
       sendLead(v)
         .then(function (res) {
-          if (res && res.status === 'error') { fail(); return; }
-          card.classList.add('is-done');
-          f.hidden = true;
-          done.hidden = false;
-          var t = $('#heroDoneTitle', done);
-          if (t) t.textContent = 'Thank you, ' + v.name.split(' ')[0] + '.';
+          if (res && res.status === 'error') { showFail(); return; }
+          showDone(v);
         })
-        .catch(fail);
+        .catch(showFail);
+    });
+  }
+
+  function leadForms() {
+    $$('form[data-lead]').forEach(leadForm);
+  }
+
+  /* ---------------------------------------------------------
+     12b. Rotating word ("…make you feel empowered.")
+     --------------------------------------------------------- */
+  function rotator() {
+    $$('[data-rotate]').forEach(function (el) {
+      var words = el.dataset.rotate.split('|');
+      if (words.length < 2 || reduced) return;
+      var i = 0;
+      setInterval(function () {
+        el.classList.add('is-out');
+        setTimeout(function () {
+          i = (i + 1) % words.length;
+          el.textContent = words[i];
+          el.classList.remove('is-out');
+        }, 380);
+      }, 2600);
     });
   }
 
@@ -581,7 +593,10 @@
   function activeLink() {
     var sections = $$('main section[id]');
     var links = {};
-    $$('.nav__list a').forEach(function (a) { links[a.getAttribute('href')] = a; });
+    // nav links are absolute ("/#approach"); only same-page anchors take part
+    $$('.nav__list a').forEach(function (a) {
+      if (a.hash && a.pathname === window.location.pathname) links[a.hash] = a;
+    });
     if (!sections.length || !('IntersectionObserver' in window)) return;
 
     var io = new IntersectionObserver(function (entries) {
@@ -624,17 +639,13 @@
   }
 
   /* ---------------------------------------------------------
-     15. Opening modal (name / email / phone / solving for)
+     15. Opening modal (open / close; the form itself is a lead form)
      --------------------------------------------------------- */
   function gate() {
     var g = $('#gate');
     if (!g) return;
 
-    var f      = $('#gateForm', g);
-    var done   = $('#gateDone', g);
-    var fine   = $('.gate__fine', g);
-    var submit = $('.gate__submit', g);
-    var fineText = fine ? fine.textContent : '';
+    var f = $('#gateForm', g);
     var closing;
 
     function open() {
@@ -642,7 +653,7 @@
       document.body.classList.add('gate-open');
       requestAnimationFrame(function () {
         g.classList.add('is-open');
-        var first = f.elements.name;
+        var first = f ? $('input, select', f) : null;
         if (first && window.innerWidth > 620) {
           setTimeout(function () { first.focus({ preventScroll: true }); }, 620);
         }
@@ -667,36 +678,87 @@
       el.addEventListener('click', close);
     });
 
-    watchLeadFields(f, '.gate__field');
+    setTimeout(open, reduced ? 350 : 1900);
+  }
 
-    f.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var v = validateLead(f, '.gate__field');
-      if (!v) return;
+  /* ---------------------------------------------------------
+     16. Advisor Growth & ROI Calculator (advisors.html)
+     --------------------------------------------------------- */
+  function advisorRoiCalc() {
+    var root = $('#advisorCalc');
+    if (!root) return;
 
-      function showError() {
-        submit.disabled = false;
-        submit.textContent = 'Request introductions';
-        if (fine) { fine.textContent = LEAD_FAIL; fine.style.color = '#e3a493'; }
-      }
+    var sMatches   = $('#calcMatches', root);
+    var sAum       = $('#calcAum', root);
+    var sCloseRate = $('#calcCloseRate', root);
+    var sFee       = $('#calcFee', root);
 
-      submit.disabled = true;
-      submit.textContent = 'Sending\u2026';
-      if (fine) { fine.textContent = fineText; fine.style.color = ''; }
+    var vMatches   = $('#valMatches', root);
+    var vAum       = $('#valAum', root);
+    var vCloseRate = $('#valCloseRate', root);
+    var vFee       = $('#valFee', root);
 
-      sendLead(v)
-        .then(function (res) {
-          if (res && res.status === 'error') { showError(); return; }
-          f.hidden = true;
-          done.hidden = false;
-          g.classList.add('is-done');
-          var t = $('#gateDoneTitle', done);
-          if (t) t.textContent = 'Thank you, ' + v.name.split(' ')[0] + '.';
-        })
-        .catch(showError);
+    var oAum       = $('#resAum', root);
+    var oRevenue   = $('#resRevenue', root);
+    var oEquity    = $('#resEquity', root);
+
+    function fmtMoney(n) {
+      if (n >= 1e9) return '$' + (n / 1e9).toFixed(2) + 'B';
+      if (n >= 1e6) return '$' + (n / 1e6).toFixed(2) + 'M';
+      if (n >= 1e3) return '$' + Math.round(n / 1e3).toLocaleString('en-US') + 'K';
+      return '$' + Math.round(n).toLocaleString('en-US');
+    }
+
+    function update() {
+      var matches   = parseInt(sMatches.value, 10);
+      var aum       = parseFloat(sAum.value);
+      var closeRate = parseFloat(sCloseRate.value) / 100;
+      var fee       = parseFloat(sFee.value) / 100;
+
+      vMatches.textContent   = matches + ' / mo';
+      vAum.textContent       = fmtMoney(aum);
+      vCloseRate.textContent = (closeRate * 100).toFixed(0) + '%';
+      vFee.textContent       = (fee * 100).toFixed(2) + '%';
+
+      var annualClients = matches * 12 * closeRate;
+      var annualNewAum  = annualClients * aum;
+      var annualRev     = annualNewAum * fee;
+      var enterpriseVal = annualRev * 2.8;
+
+      oAum.innerHTML     = fmtMoney(annualNewAum);
+      oRevenue.innerHTML = '$' + Math.round(annualRev).toLocaleString('en-US') + ' <em>/ yr</em>';
+      oEquity.innerHTML  = fmtMoney(enterpriseVal);
+    }
+
+    [sMatches, sAum, sCloseRate, sFee].forEach(function (slider) {
+      if (slider) slider.addEventListener('input', update);
     });
 
-    setTimeout(open, reduced ? 350 : 1900);
+    update();
+  }
+
+  /* ---------------------------------------------------------
+     17. Advisor Pipeline Simulator (advisors.html)
+     --------------------------------------------------------- */
+  function advisorPipeline() {
+    var box = $('#advisorPipeline');
+    if (!box) return;
+
+    var chips = $$('.pipe-chip', box);
+    var rows  = $$('.pipe__row', box);
+
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        chips.forEach(function (c) { c.classList.remove('is-active'); });
+        chip.classList.add('is-active');
+        var cat = chip.dataset.cat || 'all';
+
+        rows.forEach(function (row) {
+          var match = (cat === 'all') || (row.dataset.cat === cat);
+          row.style.display = match ? 'flex' : 'none';
+        });
+      });
+    });
   }
 
   /* ---------------------------------------------------------
@@ -714,11 +776,13 @@
     advisors();
     services();
     magnetic();
-    form();
-    heroLead();
+    leadForms();
+    rotator();
     gate();
     activeLink();
     misc();
+    advisorRoiCalc();
+    advisorPipeline();
   }
 
   if (document.readyState === 'loading') {
