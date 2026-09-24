@@ -1,40 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- @build:head -->
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>valorahq — Your money has a purpose</title>
-<meta name="description" content="Independent financial advice built around your life. valorahq connects you with advisors who know the numbers and remember the person behind them.">
+<title>Valora — Your money has a purpose</title>
+<meta name="description" content="Explore independent financial advisors. Valora helps you find advisors who work with situations like yours — you decide who you&#x27;d like to contact.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="/styles.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231e3b2a'/><text x='50' y='70' font-size='58' text-anchor='middle' fill='%23efebe0' font-family='Georgia'>V</text></svg>">
 </head>
+<!-- /@build:head -->
 <body>
 
 <a class="skip-link" href="#main">Skip to content</a>
 
 <!-- ================= HEADER ================= -->
+<!-- @build:header -->
 <header class="site-header" id="siteHeader">
   <div class="container header__inner">
-    <a class="logo" href="#top" aria-label="valorahq home">
+    <a class="logo" href="/" aria-label="Valora home">
       <span class="logo__mark" aria-hidden="true">
         <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" stroke="currentColor" stroke-width="1.4"/><path d="M6 20.5c4-9 6.5-9 10 0s6 9 10 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
       </span>
-      <span class="logo__word">valorahq</span>
+      <span class="logo__word">Valora</span>
     </a>
 
     <nav class="nav" id="primaryNav" aria-label="Primary">
       <ul class="nav__list">
-        <li><a href="#approach">Approach</a></li>
-        <li><a href="#advisors">Find an advisor</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#platform">For advisors</a></li>
-        <li><a href="#insights">Insights</a></li>
+        <li><a href="/#approach">Approach</a></li>
+        <li><a href="/#advisors">Find an advisor</a></li>
+        <li><a href="/#services">Services</a></li>
+        <li><a href="/advisors.html">For advisors</a></li>
       </ul>
       <div class="nav__cta">
-        <a class="btn btn--dark" href="#contact">Get matched</a>
+        <a class="btn btn--dark" href="/#contact">Get matched</a>
       </div>
     </nav>
 
@@ -43,6 +45,7 @@
     </button>
   </div>
 </header>
+<!-- /@build:header -->
 
 <main id="main">
 
@@ -57,7 +60,7 @@
 
   <div class="container hero__inner">
     <div class="hero__copy">
-      <p class="eyebrow reveal">Independent advice · Fiduciary always</p>
+      <p class="eyebrow reveal">Explore independent financial advisors</p>
       <h1 class="hero__title reveal">
         Your money<br>
         has a purpose.<br>
@@ -69,41 +72,35 @@
       </div>
     </div>
 
-    <aside class="hcard reveal reveal--right">
+    <!-- @build:hero-card -->
+<aside class="hcard reveal reveal--right">
       <span class="hcard__edge" aria-hidden="true"></span>
-      <p class="hcard__eyebrow">Free · Two business days</p>
-      <h2 class="hcard__title">Get three advisor<br><em>introductions.</em></h2>
+      <p class="hcard__eyebrow">Free · No obligation</p>
+      <h2 class="hcard__title">Explore financial advisors<br><em>who may fit your needs.</em></h2>
 
-      <form class="hcard__form" id="heroForm" novalidate>
-        <div class="hfield">
+      <form class="hcard__form" id="heroForm" data-lead="Client" data-done="#heroDone" novalidate>
+        <div class="hfield" data-field>
           <label for="hname">Full name</label>
           <input id="hname" name="name" type="text" required placeholder="Jordan Reyes" autocomplete="name">
           <small class="err" data-err="name"></small>
         </div>
-        <div class="hfield">
+        <div class="hfield" data-field>
           <label for="hemail">Email</label>
           <input id="hemail" name="email" type="email" required placeholder="jordan@email.com" autocomplete="email">
           <small class="err" data-err="email"></small>
         </div>
-        <div class="hfield">
+        <div class="hfield" data-field>
           <label for="hphone">Phone number</label>
           <input id="hphone" name="phone" type="tel" required placeholder="+1 (415) 909-4100" autocomplete="tel" inputmode="tel">
           <small class="err" data-err="phone"></small>
         </div>
-        <div class="hfield">
+        <div class="hfield" data-field>
           <label for="hgoal">What are you solving for?</label>
-          <select id="hgoal" name="goal" required>
-            <option value="">Select one</option>
-            <option>Retirement income</option>
-            <option>Equity compensation</option>
-            <option>Selling a business</option>
-            <option>Estate &amp; legacy</option>
-            <option>A second opinion</option>
-          </select>
+          <select id="hgoal" name="goal" required><option value="">Select one</option><option>Retirement income</option><option>Equity compensation</option><option>Selling a business</option><option>Estate &amp; legacy</option><option>A second opinion</option></select>
           <small class="err" data-err="goal"></small>
         </div>
 
-        <button class="btn btn--cream hcard__submit" type="submit">Request introductions</button>
+        <button class="btn btn--cream hcard__submit" type="submit">Explore advisors</button>
         <p class="hcard__fine">No cost, no obligation. We never sell your information.</p>
       </form>
 
@@ -111,10 +108,11 @@
         <span class="hcard__tick" aria-hidden="true">
           <svg viewBox="0 0 32 32" fill="none"><path d="M8 17l5.5 5.5L24 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </span>
-        <h3 id="heroDoneTitle">Thank you.</h3>
-        <p>Three introductions are on the way — within two business days.</p>
+        <h3 data-done-title>Thank you.</h3>
+        <p>We'll follow up within two business days with advisors who may fit what you're looking for.</p>
       </div>
     </aside>
+<!-- /@build:hero-card -->
   </div>
 
   <div class="hero__bar">
@@ -142,14 +140,14 @@
     </div>
 
     <div class="statement__cols">
-      <p class="reveal"><span class="statement__lede">A plan is not a product.</span> It is a set of decisions made in the right order, revisited as your life keeps moving. We start with what you are actually trying to build — then work backwards into the accounts, the allocations and the timing.</p>
-      <p class="reveal"><span class="statement__lede">Every relationship starts with a conversation.</span> Never a pitch. No minimum to clear before someone listens, and no proposal before we understand what a good decade looks like for you.</p>
+      <p class="reveal"><span class="statement__lede">Different advisors take different approaches to financial planning.</span> Explore advisors based on their specialties, services and the types of clients they work with.</p>
+      <p class="reveal"><span class="statement__lede">Start with a conversation.</span> You can learn about an advisor's approach, experience and services before deciding whether to work together.</p>
     </div>
 
     <ul class="statement__proof">
-      <li class="reveal"><span class="statement__proof-num">01</span><h3>Fiduciary, always</h3><p>Advice that answers to you — never to a product shelf.</p></li>
-      <li class="reveal"><span class="statement__proof-num">02</span><h3>One plan, every account</h3><p>Investments, tax and estate decisions read from the same page.</p></li>
-      <li class="reveal"><span class="statement__proof-num">03</span><h3>Revisited, not filed</h3><p>Your plan is reviewed as life moves, not left in a binder.</p></li>
+      <li class="reveal"><span class="statement__proof-num">01</span><h3>Independent advisors</h3><p>Connect with advisors who offer independent financial planning and investment services.</p></li>
+      <li class="reveal"><span class="statement__proof-num">02</span><h3>One plan, every account</h3><p>Good advisors read investments, tax and estate decisions from the same page.</p></li>
+      <li class="reveal"><span class="statement__proof-num">03</span><h3>Revisited, not filed</h3><p>A good plan is reviewed as life moves, not left in a binder.</p></li>
     </ul>
 
     <div class="statement__rule reveal" aria-hidden="true"></div>
@@ -166,7 +164,7 @@
 
     <div class="life__body">
       <p class="eyebrow reveal">01 — The conversation</p>
-      <h2 class="display display--lg reveal">Before we talk about<br>your portfolio, <em>we talk<br>about your life.</em></h2>
+      <h2 class="display display--lg reveal">A good advisor asks<br>about your life <em>before<br>your portfolio.</em></h2>
 
       <div class="accordion reveal" id="accordion">
         <div class="acc__item is-open">
@@ -175,7 +173,7 @@
             <span class="acc__title">What you're building</span>
             <span class="acc__icon" aria-hidden="true"></span>
           </button>
-          <div class="acc__panel"><p>Retirement at sixty, or a business you never sell. A second home, a first grandchild, a sabbatical that lasts a year. We write down the actual outcomes before we touch a single allocation.</p></div>
+          <div class="acc__panel"><p>Retirement at sixty, or a business you never sell. A second home, a first grandchild, a sabbatical that lasts a year. A good plan writes down the actual outcomes before touching a single allocation.</p></div>
         </div>
         <div class="acc__item">
           <button class="acc__head" aria-expanded="false">
@@ -188,18 +186,18 @@
         <div class="acc__item">
           <button class="acc__head" aria-expanded="false">
             <span class="acc__index">03</span>
-            <span class="acc__title">What we'd change first</span>
+            <span class="acc__title">Your first conversation</span>
             <span class="acc__icon" aria-hidden="true"></span>
           </button>
-          <div class="acc__panel"><p>You leave the first meeting with two or three things worth doing in the next ninety days — whether or not you ever become a client. That is the point of the meeting.</p></div>
+          <div class="acc__panel"><p>Use the first conversation to understand the advisor's approach and whether their services fit your needs.</p></div>
         </div>
         <div class="acc__item">
           <button class="acc__head" aria-expanded="false">
             <span class="acc__index">04</span>
-            <span class="acc__title">How we get paid</span>
+            <span class="acc__title">How fees work</span>
             <span class="acc__icon" aria-hidden="true"></span>
           </button>
-          <div class="acc__panel"><p>A flat, published fee. No commissions, no revenue sharing, no house products. When the only thing we sell is advice, the advice gets a lot simpler.</p></div>
+          <div class="acc__panel"><p>Advisors set their own fees and service terms. Review each advisor's information before deciding whether to engage them.</p></div>
         </div>
       </div>
     </div>
@@ -211,10 +209,14 @@
   <div class="container">
     <div class="match__head">
       <h2 class="display display--lg reveal">You don't need another<br>financial product.<br><em>You need the right person.</em></h2>
-      <p class="match__sub reveal">Tell us what you are solving for. We will shortlist three advisors who have done it before — and you decide if there is a fit.</p>
+      <p class="match__sub reveal">We'll show you advisors who work with situations like yours, and you decide who you'd like to contact.</p>
     </div>
 
     <div class="match__tools reveal">
+      <div class="match__intro">
+        <h3>Explore advisors by specialty and situation.</h3>
+        <p>Advisor profiles include their specialties, experience and the types of clients they serve.</p>
+      </div>
       <div class="chips" role="tablist" aria-label="Filter advisors by specialty">
         <button class="chip is-active" data-filter="all" role="tab" aria-selected="true">All advisors</button>
         <button class="chip" data-filter="retirement" role="tab" aria-selected="false">Retirement</button>
@@ -264,10 +266,10 @@
     <p class="match__empty" id="matchEmpty" hidden>No advisors match that search yet — try a different specialty.</p>
 
     <ol class="steps">
-      <li class="step reveal"><span class="step__num">01</span><h4>Tell us where you are.</h4><p>Ten minutes. No account numbers, no credit pull.</p></li>
+      <li class="step reveal"><span class="step__num">01</span><h4>Tell us where you are.</h4><p>A few questions. No account numbers, no credit pull.</p></li>
       <li class="step reveal"><span class="step__num">02</span><h4>Tell us where you want to go.</h4><p>The goals, the timeline and the parts you are unsure about.</p></li>
-      <li class="step reveal"><span class="step__num">03</span><h4>We identify advisors who fit.</h4><p>Matched on specialty and situation — never on who pays us.</p></li>
-      <li class="step reveal"><span class="step__num">04</span><h4>Meet them. Decide slowly.</h4><p>Three introductions, and no obligation at any point.</p></li>
+      <li class="step reveal"><span class="step__num">03</span><h4>Browse advisors by specialty and client type.</h4><p>Review advisor profiles based on their specialties, experience and client focus.</p></li>
+      <li class="step reveal"><span class="step__num">04</span><h4>Explore their profiles. Decide when you're ready.</h4><p>Contact only the advisors you choose — no obligation at any point.</p></li>
     </ol>
   </div>
 </section>
@@ -292,7 +294,7 @@
 <section class="section section--paper services" id="services">
   <div class="container services__grid">
     <div class="services__list">
-      <p class="eyebrow reveal">What an advisor actually does</p>
+      <p class="eyebrow reveal">Services offered by advisors on Valora</p>
       <ul class="slist" id="serviceList">
         <li><button class="slist__btn is-active" data-service="1"><span>01</span> Financial Planning</button></li>
         <li><button class="slist__btn" data-service="2"><span>02</span> Investment Management</button></li>
@@ -332,7 +334,7 @@
   <div class="container">
     <div class="system__head">
       <h2 class="display display--lg reveal">Your financial life<br>isn't a spreadsheet.<br><em>It's a system.</em></h2>
-      <p class="reveal">Every decision touches the next one. A Roth conversion changes a Medicare premium. A new job changes an estate plan. We keep the pieces talking to each other.</p>
+      <p class="reveal">Every decision touches the next one. A Roth conversion changes a Medicare premium. A new job changes an estate plan. A good advisor keeps the pieces talking to each other.</p>
     </div>
 
     <div class="diagram reveal" id="diagram">
@@ -372,57 +374,34 @@
 </section>
 
 <!-- ================= PLATFORM ================= -->
-
-
-<!-- ================= BACKSTAGE ================= -->
-<section class="section section--paper backstage">
-  <div class="container backstage__grid">
-    <div class="backstage__intro">
-      <h2 class="display display--md reveal">The complexity<br>stays backstage.</h2>
-      <p class="reveal">The operational weight of running an advisory practice — handled quietly, in the background, by people who do it all day.</p>
-    </div>
-    <ul class="blist">
-      <li class="reveal"><span>01</span><h4>Client onboarding</h4><em>Same-day account opening with e-signature and pre-filled forms.</em></li>
-      <li class="reveal"><span>02</span><h4>Account transfers</h4><em>Transfers tracked end to end, with the client kept in the loop.</em></li>
-      <li class="reveal"><span>03</span><h4>Portfolio service</h4><em>Rebalancing, drift alerts and trade review across every household.</em></li>
-      <li class="reveal"><span>04</span><h4>Tax support</h4><em>Harvesting, cost basis and year-end packets sent where they need to go.</em></li>
-      <li class="reveal"><span>05</span><h4>Client updates</h4><em>Statements and progress reports that arrive without you chasing them.</em></li>
-    </ul>
-  </div>
-</section>
-
-<!-- ================= BRAND / DARK DASHBOARDS ================= -->
-<section class="section section--green brand">
-  <div class="container">
-    <h2 class="display display--lg brand__title reveal">Your brand stays in front.<br><em>Our infrastructure stays<br>behind it.</em></h2>
-
-    <div class="brand__mocks">
-      <div class="mock mock--dark reveal" aria-hidden="true">
-        <div class="mock__bar"><span></span><span></span><span></span><em>harrison.advisors</em></div>
-        <div class="mock__body">
-          <div class="mock__row"><div><p class="mock__label">Household</p><p class="mock__h">The Harrison Family</p></div><div class="mock__pill">Review due</div></div>
-          <div class="mock__kpis"><div><p class="mock__label">Invested</p><p class="mock__val">$3,940,120</p></div><div><p class="mock__label">Cash</p><p class="mock__val">$242,780</p></div></div>
-          <div class="mock__chart">
-            <span style="--h:42%"></span><span style="--h:60%"></span><span style="--h:50%"></span><span style="--h:74%"></span><span style="--h:64%"></span><span style="--h:88%"></span>
-          </div>
-        </div>
-      </div>
-
-      <div class="mock mock--dark mock--offset reveal" aria-hidden="true">
-        <div class="mock__bar"><span></span><span></span><span></span><em>Client portal</em></div>
-        <div class="mock__body">
-          <div class="mock__row"><div><p class="mock__label">Goal</p><p class="mock__h">Retire at 62</p></div><div class="mock__pill mock__pill--good">94% funded</div></div>
-          <div class="mock__prog"><i style="--w:94%"></i></div>
-          <ul class="mock__tasks">
-            <li>Roth conversion window — Nov</li>
-            <li>529 contribution scheduled</li>
-            <li>Umbrella policy review</li>
-          </ul>
-        </div>
-      </div>
+<section class="section section--paper platform" id="platform">
+  <div class="container platform__grid">
+    <div class="platform__copy">
+      <p class="eyebrow reveal">For independent advisors</p>
+      <h2 class="display display--lg reveal">Behind every<br>great advisor<br><em>is a better way<br>to work.</em></h2>
+      <p class="reveal">Custody, billing, compliance, reporting and onboarding in one place — so the hours go back to the people who hired you.</p>
+      <a class="btn btn--dark reveal" href="/advisors.html">See the platform</a>
     </div>
 
-    <p class="brand__note reveal">White-labelled to your firm, from the login screen to the quarterly report.</p>
+    <div class="mock reveal" aria-hidden="true">
+      <div class="mock__bar"><span></span><span></span><span></span><em>Valora</em></div>
+      <div class="mock__body">
+        <div class="mock__row">
+          <div><p class="mock__label">Household</p><p class="mock__h">The Harrison Family</p></div>
+          <div class="mock__pill">On track</div>
+        </div>
+        <div class="mock__kpis">
+          <div><p class="mock__label">Net worth</p><p class="mock__val">$4,182,900</p></div>
+          <div><p class="mock__label">YTD</p><p class="mock__val mock__val--up">+8.4%</p></div>
+          <div><p class="mock__label">Next review</p><p class="mock__val">Mar 12</p></div>
+        </div>
+        <div class="mock__chart">
+          <span style="--h:38%"></span><span style="--h:52%"></span><span style="--h:44%"></span><span style="--h:66%"></span>
+          <span style="--h:58%"></span><span style="--h:78%"></span><span style="--h:70%"></span><span style="--h:92%"></span>
+        </div>
+        <div class="mock__foot"><span>Plan updated 2 hours ago</span><span class="mock__link">Open plan →</span></div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -432,36 +411,35 @@
   <div class="chapter__scrim"></div>
   <div class="container chapter__inner">
     <h2 class="display display--md reveal">Planning for the next chapter.</h2>
-    <blockquote class="reveal">"We weren't looking for someone to beat the market. We were looking for someone who could tell us whether we'd be alright — and show their work."</blockquote>
-    <cite class="reveal">Tom &amp; Grace W. · clients since 2016</cite>
+    <blockquote class="reveal">"For the first time, our financial plan actually felt like it belonged to us."</blockquote>
   </div>
 </section>
 
-<!-- ================= INSIGHTS ================= -->
+<!-- ================= INSIGHTS (NON-CLICKABLE) ================= -->
 <section class="section section--paper insights" id="insights">
   <div class="container">
     <div class="insights__head">
-      <h2 class="display display--lg reveal">Good financial advice<br><em>should make you smarter.</em></h2>
-      <a class="link-arrow reveal" href="#insights">All insights <span aria-hidden="true">→</span></a>
+      <h2 class="display display--lg reveal">Good financial advice<br><em>should make you feel <span class="rotator" data-rotate="empowered.|prepared.|confident.|free.">confident.</span></em></h2>
     </div>
 
     <div class="insights__grid">
       <article class="post reveal">
-        <img src="https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&fit=crop&w=1000&q=80" alt="" loading="lazy">
-        <p class="post__meta">Retirement · 6 min</p>
+        <img src="https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&fit=crop&w=1000&q=80" alt="Tax and financial documents" loading="lazy">
+        <p class="post__meta">Retirement income · 6 min read</p>
         <h3>What a realistic withdrawal rate looks like now</h3>
       </article>
+
       <article class="post reveal">
-        <img src="https://images.unsplash.com/photo-1758691031787-90867cb6fb2c?auto=format&fit=crop&w=1000&q=80" alt="" loading="lazy">
-        <p class="post__meta">Family · 5 min</p>
+        <img src="https://images.unsplash.com/photo-1758691031787-90867cb6fb2c?auto=format&fit=crop&w=1000&q=80" alt="An older couple in conversation" loading="lazy">
+        <p class="post__meta">Family · 5 min read</p>
         <h3>The conversation every family should have before retirement</h3>
       </article>
 
       <ul class="post-list">
-        <li class="reveal"><a href="#insights"><span>Taxes</span><h4>When a Roth conversion is worth the tax bill</h4><em aria-hidden="true">→</em></a></li>
-        <li class="reveal"><a href="#insights"><span>Equity comp</span><h4>Your RSUs are a bonus, not a lottery ticket</h4><em aria-hidden="true">→</em></a></li>
-        <li class="reveal"><a href="#insights"><span>Markets</span><h4>Why the best move is usually the boring one</h4><em aria-hidden="true">→</em></a></li>
-        <li class="reveal"><a href="#insights"><span>Estate</span><h4>Beneficiary forms quietly override your will</h4><em aria-hidden="true">→</em></a></li>
+        <li class="reveal"><div><span>Taxes</span><h4>When a Roth conversion is worth the tax bill</h4></div></li>
+        <li class="reveal"><div><span>Equity comp</span><h4>Your RSUs are a bonus, not a lottery ticket</h4></div></li>
+        <li class="reveal"><div><span>Markets</span><h4>What happens if the market drops right before you retire</h4></div></li>
+        <li class="reveal"><div><span>Estate</span><h4>Beneficiary forms quietly override your will</h4></div></li>
       </ul>
     </div>
   </div>
@@ -477,21 +455,13 @@
   </div>
 </section>
 
-<!-- ================= TESTIMONIAL ================= -->
-<section class="section section--cream quote">
-  <div class="container">
-    <p class="eyebrow reveal">Client · Portland</p>
-    <blockquote class="reveal display display--md">"For the first time, our financial plan actually felt like it belonged to us."</blockquote>
-    <cite class="reveal">— Dana &amp; Michael L.</cite>
-  </div>
-</section>
-
 <!-- ================= CTA / FORM ================= -->
+<!-- @build:contact -->
 <section class="section section--green cta" id="contact">
   <div class="container cta__grid">
     <div class="cta__copy">
       <h2 class="display display--lg reveal">Let's build a<br>financial life<br><em>that feels like yours.</em></h2>
-      <p class="reveal">Answer four questions. We will send three advisor introductions within two business days — and nothing else unless you ask.</p>
+      <p class="reveal">Answer a few questions and explore advisors who may fit what you're looking for.</p>
 
       <ul class="direct reveal">
         <li>
@@ -506,82 +476,79 @@
       <p class="direct__note reveal">Prefer to skip the form? Call or write to us directly — we answer every message ourselves.</p>
     </div>
 
-    <form class="form reveal" id="matchForm" novalidate>
-      <div class="field">
-        <label for="fname">Full name</label>
-        <input id="fname" name="name" type="text" required placeholder="Jordan Reyes" autocomplete="name">
-        <small class="err" data-err="name"></small>
-      </div>
-      <div class="field">
-        <label for="femail">Email</label>
-        <input id="femail" name="email" type="email" required placeholder="jordan@email.com" autocomplete="email">
-        <small class="err" data-err="email"></small>
-      </div>
-      <div class="field">
-        <label for="fphone">Phone number</label>
-        <input id="fphone" name="phone" type="tel" required placeholder="+1 (415) 909-4100" autocomplete="tel" inputmode="tel">
-        <small class="err" data-err="phone"></small>
-      </div>
-      <div class="field">
-        <label for="fgoal">What are you solving for?</label>
-        <select id="fgoal" name="goal" required>
-          <option value="">Select one</option>
-          <option>Retirement income</option>
-          <option>Equity compensation</option>
-          <option>Selling a business</option>
-          <option>Estate &amp; legacy</option>
-          <option>A second opinion</option>
-        </select>
-        <small class="err" data-err="goal"></small>
-      </div>
-      <div class="field field--full">
-        <label for="fnote">Anything we should know?</label>
-        <textarea id="fnote" name="note" rows="3" placeholder="A sentence is plenty."></textarea>
-      </div>
+    <form class="form reveal" id="matchForm" data-lead="Client" data-success="Thank you, {name} — we'll follow up within two business days with advisors who may fit what you're looking for." novalidate>
+        <div class="field" data-field>
+          <label for="fname">Full name</label>
+          <input id="fname" name="name" type="text" required placeholder="Jordan Reyes" autocomplete="name">
+          <small class="err" data-err="name"></small>
+        </div>
+        <div class="field" data-field>
+          <label for="femail">Email</label>
+          <input id="femail" name="email" type="email" required placeholder="jordan@email.com" autocomplete="email">
+          <small class="err" data-err="email"></small>
+        </div>
+        <div class="field" data-field>
+          <label for="fphone">Phone number</label>
+          <input id="fphone" name="phone" type="tel" required placeholder="+1 (415) 909-4100" autocomplete="tel" inputmode="tel">
+          <small class="err" data-err="phone"></small>
+        </div>
+        <div class="field" data-field>
+          <label for="fgoal">What are you solving for?</label>
+          <select id="fgoal" name="goal" required><option value="">Select one</option><option>Retirement income</option><option>Equity compensation</option><option>Selling a business</option><option>Estate &amp; legacy</option><option>A second opinion</option></select>
+          <small class="err" data-err="goal"></small>
+        </div>
+        <div class="field field--full" data-field>
+          <label for="fnote">Anything we should know?</label>
+          <textarea id="fnote" name="note" rows="3" placeholder="A sentence is plenty."></textarea>
+        </div>
       <div class="field field--full form__foot">
-        <button class="btn btn--cream" type="submit">Request introductions</button>
+        <button class="btn btn--cream" type="submit">Explore advisors</button>
         <p class="form__fine">No cost, no obligation. We never sell your information.</p>
       </div>
-      <p class="form__success" id="formSuccess" role="status" hidden>Thank you — we will be in touch within two business days.</p>
+      <p class="form__success" role="status" hidden></p>
     </form>
   </div>
 </section>
+<!-- /@build:contact -->
 
 </main>
 
 <!-- ================= FOOTER ================= -->
+<!-- @build:footer -->
 <footer class="footer">
   <div class="container">
-    <h2 class="display display--md footer__statement reveal">Better decisions.<br>Better relationships.<br><em>A better way to build wealth.</em></h2>
+    <h2 class="display display--md footer__statement reveal">Independent advice.<br><em>Personal fit.</em></h2>
 
     <div class="footer__grid">
       <div class="footer__brand">
-        <a class="logo logo--light" href="#top">
+        <a class="logo logo--light" href="/">
           <span class="logo__mark" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" stroke="currentColor" stroke-width="1.4"/><path d="M6 20.5c4-9 6.5-9 10 0s6 9 10 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span>
-          <span class="logo__word">valorahq</span>
+          <span class="logo__word">Valora</span>
         </a>
-        <p>An independent network of fiduciary advisors, and the platform that supports them.</p>
+        <p>An independent platform helping people discover financial advisors.</p>
         <ul class="footer__contact">
           <li><a href="mailto:barot@valorahq.com">barot@valorahq.com</a></li>
           <li><a href="tel:+14159094100">+1 (415) 909-4100</a></li>
         </ul>
       </div>
 
-      <nav class="footer__col" aria-label="Company"><h5>Company</h5><ul><li><a href="#approach">Our approach</a></li><li><a href="#advisors">Find an advisor</a></li><li><a href="#platform">For advisors</a></li><li><a href="#insights">Insights</a></li></ul></nav>
-      <nav class="footer__col" aria-label="Services"><h5>Services</h5><ul><li><a href="#services">Financial planning</a></li><li><a href="#services">Investments</a></li><li><a href="#services">Tax strategy</a></li><li><a href="#services">Estate &amp; legacy</a></li></ul></nav>
-      <nav class="footer__col" aria-label="Legal"><h5>Legal</h5><ul><li><a href="#top">Form ADV</a></li><li><a href="#top">Privacy</a></li><li><a href="#top">Terms</a></li><li><a href="#top">Disclosures</a></li></ul></nav>
+      <nav class="footer__col" aria-label="Company"><h5>Company</h5><ul><li><a href="/#approach">Our approach</a></li><li><a href="/#advisors">Find an advisor</a></li><li><a href="/advisors.html">For advisors</a></li></ul></nav>
+      <nav class="footer__col" aria-label="Services"><h5>Services</h5><ul><li><a href="/#services">Financial planning</a></li><li><a href="/#services">Investments</a></li><li><a href="/#services">Tax strategy</a></li><li><a href="/#services">Estate &amp; legacy</a></li></ul></nav>
+      <nav class="footer__col" aria-label="Legal"><h5>Legal</h5><ul><li><a href="/#top">Form ADV</a></li><li><a href="/#top">Privacy</a></li><li><a href="/#top">Terms</a></li><li><a href="/#top">Disclosures</a></li></ul></nav>
     </div>
 
     <div class="footer__base">
-      <p>© <span id="year">2026</span> valorahq. Advisory services offered through registered investment advisers.</p>
+      <p>© <span id="year">2026</span> Valora. Financial advisory services are provided independently by the advisors you choose to contact. Valora does not provide investment advice.</p>
       <p>This site is for informational purposes and is not investment advice.</p>
     </div>
   </div>
 </footer>
 
 <button class="to-top" id="toTop" aria-label="Back to top"><span aria-hidden="true">↑</span></button>
+<!-- /@build:footer -->
 
 <!-- ================= OPENING MODAL ================= -->
+<!-- @build:gate -->
 <div class="gate" id="gate" hidden>
   <div class="gate__scrim" data-gate-close></div>
 
@@ -593,62 +560,56 @@
     </button>
 
     <div class="gate__inner">
-      <p class="gate__eyebrow gate__i" style="--i:1">Three introductions. No cost.</p>
+      <p class="gate__eyebrow gate__i" style="--i:1">Free · No obligation</p>
       <h2 class="gate__title display gate__i" id="gateTitle" style="--i:2">
-        Let's find your<br><em>right person.</em>
+        Explore advisors<br><em>who may fit your needs.</em>
       </h2>
       <p class="gate__sub gate__i" id="gateSub" style="--i:3">
-        Four quick things — then three fiduciary advisor introductions within two business days.
+        Answer a few questions and explore advisors who may fit what you're looking for.
       </p>
 
-      <form class="gate__form" id="gateForm" novalidate>
-        <div class="gate__field gate__i" style="--i:4">
+      <form class="gate__form gate__i" id="gateForm" data-lead="Client" data-done="#gateDone" style="--i:4" novalidate>
+        <div class="gate__field" data-field>
           <label for="gname">Full name</label>
           <input id="gname" name="name" type="text" required placeholder="Jordan Reyes" autocomplete="name">
           <small class="err" data-err="name"></small>
         </div>
-        <div class="gate__field gate__i" style="--i:5">
+        <div class="gate__field" data-field>
           <label for="gemail">Email</label>
           <input id="gemail" name="email" type="email" required placeholder="jordan@email.com" autocomplete="email">
           <small class="err" data-err="email"></small>
         </div>
-        <div class="gate__field gate__i" style="--i:6">
+        <div class="gate__field" data-field>
           <label for="gphone">Phone number</label>
           <input id="gphone" name="phone" type="tel" required placeholder="+1 (415) 909-4100" autocomplete="tel" inputmode="tel">
           <small class="err" data-err="phone"></small>
         </div>
-        <div class="gate__field gate__i" style="--i:7">
+        <div class="gate__field" data-field>
           <label for="ggoal">What are you solving for?</label>
-          <select id="ggoal" name="goal" required>
-            <option value="">Select one</option>
-            <option>Retirement income</option>
-            <option>Equity compensation</option>
-            <option>Selling a business</option>
-            <option>Estate &amp; legacy</option>
-            <option>A second opinion</option>
-          </select>
+          <select id="ggoal" name="goal" required><option value="">Select one</option><option>Retirement income</option><option>Equity compensation</option><option>Selling a business</option><option>Estate &amp; legacy</option><option>A second opinion</option></select>
           <small class="err" data-err="goal"></small>
         </div>
 
-        <div class="gate__foot gate__i" style="--i:8">
-          <button class="btn btn--cream gate__submit" type="submit">Request introductions</button>
+        <div class="gate__foot">
+          <button class="btn btn--cream gate__submit" type="submit">Explore advisors</button>
           <button class="gate__skip" type="button" data-gate-close>I'm just looking</button>
         </div>
-        <p class="gate__fine gate__i" style="--i:9">No cost, no obligation. We never sell your information.</p>
+        <p class="gate__fine">No cost, no obligation. We never sell your information.</p>
       </form>
 
       <div class="gate__done" id="gateDone" hidden>
         <span class="gate__tick" aria-hidden="true">
           <svg viewBox="0 0 32 32" fill="none"><path d="M8 17l5.5 5.5L24 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </span>
-        <h3 class="display" id="gateDoneTitle" style="font-size:1.5rem">Thank you.</h3>
-        <p id="gateDoneText">We will send three introductions within two business days.</p>
+        <h3 class="display" data-done-title style="font-size:1.5rem">Thank you.</h3>
+        <p>We'll follow up within two business days with advisors who may fit what you're looking for.</p>
         <button class="btn btn--cream" type="button" data-gate-close>Explore the site</button>
       </div>
     </div>
   </div>
 </div>
+<!-- /@build:gate -->
 
-<script src="script.js"></script>
+<script src="/script.js"></script>
 </body>
 </html>
